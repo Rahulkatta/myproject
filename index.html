@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <title>Users</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    .mainDiv {
+      min-width: 400px;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 10px 24px 0 rgba(0, 0, 0, 0.19);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .bgDiv {
+      position: fixed;
+      background: linear-gradient(90deg, rgba(53, 70, 78, 1) 0%, rgba(29, 29, 29, 1) 100%);
+      min-height: 40%;
+      width: 100%;
+      border-bottom-left-radius: 100% 50%;
+      border-bottom-right-radius: 100% 50%;
+    }
+
+    .saveButton {
+      margin-top: 20px;
+      color: #fff;
+      border-radius: 100px;
+      background: linear-gradient(90deg, rgba(53, 70, 78, 1) 0%, rgba(29, 29, 29, 1) 100%);
+    }
+
+    .progress {
+      width: 10rem;
+      height: 10rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    img {
+      pointer-events: none;
+    }
+
+    body {}
+  </style>
+
+  <script type="text/javascript">
+    function createAccount() {
+      document.getElementById('logIntoAccountDiv').style.visibility = "hidden";
+      document.getElementById('createAccountDiv').style.visibility = "visible";
+    }
+
+    function logIntoAccount() {
+      document.getElementById('createAccountDiv').style.visibility = "hidden";
+      document.getElementById('logIntoAccountDiv').style.visibility = "visible";
+    }
+  </script>
+
+</head>
+
+<body>
+
+  <div class="bgDiv"></div>
+
+  <div id="logIntoAccountDiv" class="col-sm-4 mainDiv">
+    <form style="padding:20px">
+      <center><img src="logo.png" alt="" width="200px" style="padding-bottom:10px"></center>
+      <div class="col-sm-12" style="padding:2px !important;">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+        </div>
+      </div>
+      <div class="col-sm-12" style="padding:2px !important;">
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+        </div>
+      </div>
+      <div class="col-sm-12" style="padding:2px !important;">
+        <button type="submit" class="form-control saveButton">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="false"></span>
+          Login
+        </button>
+      </div>
+      <center><label style="margin-top:20px"><a href="javascript:createAccount()">Create account</a></label></center>
+    </form>
+  </div>
+
+  <div id="createAccountDiv" class="col-sm-4 mainDiv" style="visibility: hidden">
+    <form style="padding:20px">
+      <center><img src="logo.png" alt="" width="200px" style="padding-bottom:10px"></center>
+
+
+      <div class="col-sm-12" style="padding:0px !important;">
+        <div class="col-sm-6" style="padding:2px !important;">
+          <div class="form-group">
+            <label for="exampleInputEmail1">First Name</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="First name" required>
+          </div>
+        </div>
+        <div class="col-sm-6" style="padding:2px !important;">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Last Name</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Last name" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12" style="padding:2px !important;">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" required>
+        </div>
+      </div>
+      <div class="col-sm-12" style="padding:2px !important;">
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+        </div>
+      </div>
+      <div class="col-sm-12" style="padding:2px !important;">
+        <div class="form-group">
+          <label for="exampleInputPassword1">Confirm Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" required>
+        </div>
+      </div>
+      <div class="col-sm-12" style="padding:2px !important;">
+        <button type="submit" class="form-control saveButton">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="false"></span>
+          Create Account
+        </button>
+      </div>
+      <center><label style="margin-top:20px"><a href="javascript:logIntoAccount()">already have an account</a></label></center>
+    </form>
+  </div>
+
+  </div>
+
+</body>
+
+</html>
