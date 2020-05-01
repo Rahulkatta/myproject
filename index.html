@@ -18,13 +18,13 @@
     }
 
     .mainDiv {
-      min-width: 400px;
       background: #ffffff;
       border-radius: 10px;
       padding: 10px;
+      max-height: inherit;
       box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 10px 24px 0 rgba(0, 0, 0, 0.19);
       position: absolute;
-      top: 50%;
+      top: 45%;
       left: 50%;
       -ms-transform: translateX(-50%) translateY(-50%);
       -webkit-transform: translate(-50%, -50%);
@@ -66,6 +66,9 @@
   </style>
 
   <script type="text/javascript">
+
+   var user_obj_globel;
+   var globelUserDetails;
     function createAccount() {
       document.getElementById('logIntoAccountDiv').style.visibility = "hidden";
       document.getElementById('createAccountDiv').style.visibility = "visible";
@@ -75,6 +78,81 @@
       document.getElementById('createAccountDiv').style.visibility = "hidden";
       document.getElementById('logIntoAccountDiv').style.visibility = "visible";
     }
+
+    function logonClicked() {
+
+      var firstName = document.getElementById('firstName').value;
+      var lastName = document.getElementById('lastName').value;
+      var username = document.getElementById('userName').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var confirmPassword = document.getElementById('confirmPassword').value;
+      var user = '{"firstName":"' + firstName + '","lastName":"' + lastName + '","userName":"' + username + '","email":"' + email + '","password":"' + password + '"}';
+      obj = JSON.parse(user);
+
+      alert(obj.firstName);
+      //
+      // var temp = '{"Users":[{"firstName":"Rahul","lastName":"Katta","userName":"RahulK","email":"Rahul.katta97@gmail.com","password":"Rahul123"}]}';
+      // obj2 = JSON.parse(temp);
+      // obj2.Users.add(obj);
+      //
+      // alert(obj.Users.size);
+      //
+      // obj2.Users.push(obj);
+      //
+      // alert(obj2.Users[1].firstName);
+
+      readTextFile("users.txt", obj);
+    }
+
+    function loginClicked(username, password) {
+      var user = document.getElementById('loginUserName').value;
+      var pass = document.getElementById('loginPassword').value;
+      alert(user + pass);
+      var userDetails = getUserDetails(user, pass);
+      alert("done");
+    }
+
+    function getUserDetails(user, pass) {
+      var users = readTextFile();
+
+      alert(user_obj_globel[0].firstName);
+
+      forEach((user_obj_globel, i) => {
+        alert(i.firstName);
+        if (i.userName == user) {
+          if (i.password == pass) {
+            userDetails = '{"User":'+i+',"error":null}';
+            return userDetails;
+          } else {
+            userDetails = '{"User":null,"error":"password incorrect"}';
+            return userDetails;
+          }
+        } else {
+          userDetails = '{"User":null,"error":"User does not exists"}';
+        }
+      });
+      return userDetails;
+    }
+
+
+
+    function readTextFile() {
+      var rawFile = new XMLHttpRequest();
+      rawFile.open("GET", 'users', false);
+      rawFile.onreadystatechange = function() {
+        if (rawFile.readyState === 4) {
+          if (rawFile.status === 200 || rawFile.status == 0) {
+            var allText = rawFile.responseText;
+            alert(allText);
+            user_obj = JSON.parse(allText);
+            user_obj_globel = user_obj.Users;
+            return user_obj.Users;
+          }
+        }
+      }
+      rawFile.send(null);
+    }
   </script>
 
 </head>
@@ -83,23 +161,25 @@
 
   <div class="bgDiv"></div>
 
+
+
   <div id="logIntoAccountDiv" class="col-sm-4 mainDiv">
     <form style="padding:20px">
       <center><img src="logo.png" alt="" width="200px" style="padding-bottom:10px"></center>
       <div class="col-sm-12" style="padding:2px !important;">
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+          <label for="exampleInputEmail1">Username</label>
+          <input type="text" class="form-control" id="loginUserName" aria-describedby="emailHelp" placeholder="Username">
         </div>
       </div>
       <div class="col-sm-12" style="padding:2px !important;">
         <div class="form-group">
           <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+          <input type="password" class="form-control" id="loginPassword" placeholder="Password">
         </div>
       </div>
       <div class="col-sm-12" style="padding:2px !important;">
-        <button type="submit" class="form-control saveButton">
+        <button onclick="loginClicked('Rahul', 'Password')" class="form-control saveButton">
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="false"></span>
           Login
         </button>
@@ -107,6 +187,9 @@
       <center><label style="margin-top:20px"><a href="javascript:createAccount()">Create account</a></label></center>
     </form>
   </div>
+
+
+
 
   <div id="createAccountDiv" class="col-sm-4 mainDiv" style="visibility: hidden">
     <form style="padding:20px">
@@ -117,37 +200,42 @@
         <div class="col-sm-6" style="padding:2px !important;">
           <div class="form-group">
             <label for="exampleInputEmail1">First Name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="First name" required>
+            <input type="text" class="form-control" id="firstName" aria-describedby="emailHelp" placeholder="First name">
           </div>
         </div>
         <div class="col-sm-6" style="padding:2px !important;">
           <div class="form-group">
             <label for="exampleInputEmail1">Last Name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Last name" required>
+            <input type="text" class="form-control" id="lastName" aria-describedby="emailHelp" placeholder="Last name">
           </div>
         </div>
       </div>
-
+      <div class="col-sm-12" style="padding:2px !important;">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Username</label>
+          <input type="text" class="form-control" id="userName" aria-describedby="emailHelp" placeholder="Username">
+        </div>
+      </div>
       <div class="col-sm-12" style="padding:2px !important;">
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" required>
+          <input type="text" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
         </div>
       </div>
       <div class="col-sm-12" style="padding:2px !important;">
         <div class="form-group">
           <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+          <input type="password" class="form-control" id="password" placeholder="Password">
         </div>
       </div>
       <div class="col-sm-12" style="padding:2px !important;">
         <div class="form-group">
           <label for="exampleInputPassword1">Confirm Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" required>
+          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
         </div>
       </div>
       <div class="col-sm-12" style="padding:2px !important;">
-        <button type="submit" class="form-control saveButton">
+        <button onclick="logonClicked()" class="form-control saveButton">
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="false"></span>
           Create Account
         </button>
